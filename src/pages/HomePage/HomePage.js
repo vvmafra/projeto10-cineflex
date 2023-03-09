@@ -29,13 +29,12 @@ export default function HomePage() {
             Selecione o filme
 
             <ListContainer>
-                
-                    {movieImage.map((movie) => (
-                        <Link to={`/sessoes/${movie.id}`}>
-                        <MovieContainer key={movie.id}>
-                            <img src={movie.posterURL} alt="poster"/>
-                        </MovieContainer>
-                        </Link>
+                {movieImage.map((movie) => (
+                    <Link to={`/sessoes/${movie.id}`} key={movie.id}>
+                    <MovieContainer >
+                        <img src={movie.posterURL} alt="poster"/>
+                    </MovieContainer>
+                    </Link>
                     ))}
             </ListContainer>
 
