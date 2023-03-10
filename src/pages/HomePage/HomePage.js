@@ -12,7 +12,6 @@ export default function HomePage() {
 
         promise.then((res) => {
             setMovieImage(res.data)
-            console.log(res.data)
         })
 
         promise.catch((err) => {

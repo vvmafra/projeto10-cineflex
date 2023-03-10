@@ -1,30 +1,69 @@
+import { useEffect, useState } from "react"
+import { useParams, Link } from "react-router-dom"
+import axios from "axios"
 import styled from "styled-components"
 
 export default function SeatsPage() {
+    const [seatsMovie, setSeatsMovie] = useState(undefined)
+    const [selectedSeat, setSelectedSeat] = useState([])
+    const { idSessao } = useParams()
+    
+    
+    console.log(selectedSeat)
+    
+    function clickSeat(seat){
+        console.log(seat.isAvailable)
+        const newSeat = [...selectedSeat]
+        setSelectedSeat([...newSeat, seat])
+    }
+
+
+    useEffect(() => {
+        const urlSeats = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
+        const promise = axios.get(urlSeats)
+
+        promise.then((res) => {
+            setSeatsMovie(res.data)
+            console.log(res.data)
+        })
+
+        promise.catch((err) => {
+            console.log(err.response.data)
+        })
+    }, [])
+
+    if (seatsMovie === undefined) {
+        return <div>Loading...</div>
+    }
 
     return (
         <PageContainer>
             Selecione o(s) assento(s)
-
+            
             <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
+            {seatsMovie.seats.map((sea) => (
+                <SeatItem 
+                key={sea.id}
+                id={sea.id}
+                isAvailable={sea.isAvailable} 
+                onClick={() => clickSeat(sea.name, sea.isAvailable)}>
+                    {sea.name}
+                    </SeatItem>
+                ))}
             </SeatsContainer>
+            
 
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle isAvailable={1}/>
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle isAvailable={2}/>
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle isAvailable={3}/>
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
@@ -41,11 +80,11 @@ export default function SeatsPage() {
 
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={seatsMovie.movie.posterURL} alt="poster" />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                    <p>Sexta - 14h00</p>
+                    <p>{seatsMovie.movie.title}</p>
+                    <p>{seatsMovie.day.weekday} - {seatsMovie.name}</p>
                 </div>
             </FooterContainer>
 
@@ -96,8 +135,24 @@ const CaptionContainer = styled.div`
     margin: 20px;
 `
 const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: ${props => {
+        if (props.isAvailable === 1) {
+            return "1px solid #0E7D71"
+        } else if (props.isAvailable === 2) {
+            return "1px solid #7B8B99"
+        } else if (props.isAvailable === 3) {
+            return "1px solid #F7C52B"
+        }
+    }}; 
+    background-color: ${props => {
+        if (props.isAvailable === 1) {
+            return "#1AAE9E"
+        } else if (props.isAvailable === 2) {
+            return "#C3CFD9"
+        } else if (props.isAvailable === 3) {
+            return "#FBE192"
+        }
+    }};
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -113,8 +168,10 @@ const CaptionItem = styled.div`
     font-size: 12px;
 `
 const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: ${props => props.isAvailable ? "1px solid #808F9D" : 
+"1px solid #F7C52B"};
+    background-color: ${props => props.isAvailable ? "#C3CFD9" : 
+"#FBE192"};
     height: 25px;
     width: 25px;
     border-radius: 25px;
