@@ -36,8 +36,11 @@ export default function App() {
                 />}/>
                 <Route path="/sucesso" element={<SuccessPage 
                 selectedSeatName={selectedSeatName}
+                setSelectedSeatName={setSelectedSeatName}
                 nameId={nameId}
+                setNameId={setNameId}
                 cpf={cpf}
+                setCpf={setCpf}
                 movieSession={movieSession}/>}/>
             </Routes>
         </BrowserRouter>

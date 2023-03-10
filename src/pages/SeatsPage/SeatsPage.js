@@ -6,12 +6,8 @@ import styled from "styled-components"
 export default function SeatsPage({selectedSeat, setSelectedSeat, selectedSeatName, setSelectedSeatName, nameId, setNameId, cpf, setCpf, movieSession, setMovieSession}) {
 
     const [seatsMovie, setSeatsMovie] = useState(undefined)
-    
     const { idSessao } = useParams()
     const navigate = useNavigate()
-
-
-    console.log(movieSession)
 
     function clickSeat(seat, available, name) {
 
@@ -61,7 +57,6 @@ export default function SeatsPage({selectedSeat, setSelectedSeat, selectedSeatNa
         promise.then((res) => {
             setSeatsMovie(res.data.seats)
             setMovieSession(res.data)
-            console.log(res.data)
         })
 
         promise.catch((err) => {

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 
-export default function SuccessPage({selectedSeatName, nameId, cpf, movieSession}) {
+export default function SuccessPage({selectedSeatName, nameId, cpf, movieSession, setSelectedSeatName, setNameId, setCpf}) {
     
     const navigate = useNavigate()
     const seatsList = selectedSeatName.map(seat => {
@@ -10,6 +10,9 @@ export default function SuccessPage({selectedSeatName, nameId, cpf, movieSession
 
     function backHome(){
         navigate("/")
+        setSelectedSeatName([])
+        setNameId("") 
+        setCpf("")
     }
 
     return (
