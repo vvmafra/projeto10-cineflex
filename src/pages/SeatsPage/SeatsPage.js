@@ -3,19 +3,17 @@ import { useParams, useNavigate } from "react-router-dom"
 import axios from "axios"
 import styled from "styled-components"
 
-export default function SeatsPage() {
+export default function SeatsPage({selectedSeat, setSelectedSeat, selectedSeatName, setSelectedSeatName, nameId, setNameId, cpf, setCpf, movieSession, setMovieSession}) {
+
     const [seatsMovie, setSeatsMovie] = useState(undefined)
-    const [selectedSeat, setSelectedSeat] = useState([])
-    const [movieSession, setMovieSession] = useState(undefined)
-    const [nameId, setName] = useState("")
-    const [cpf, setCpf] = useState("")
+    
     const { idSessao } = useParams()
     const navigate = useNavigate()
 
 
-    console.log(selectedSeat)
+    console.log(movieSession)
 
-    function clickSeat(seat, available) {
+    function clickSeat(seat, available, name) {
 
         if (!available) {
             alert("Esse assento não está disponível")
@@ -23,11 +21,24 @@ export default function SeatsPage() {
         else {
             setSelectedSeat((prevSeats) => {
                 if (prevSeats.includes(seat)) {
+                
                     return prevSeats.filter((prevSeats) => prevSeats !== seat);
+                    
                 }
                 else {
                     return [...prevSeats, seat];
                 }
+            })
+            setSelectedSeatName((prevSeatsName) => {
+                if (prevSeatsName.includes(name)) {
+                
+                    return prevSeatsName.filter((prevSeatsName) => prevSeatsName !== name);
+                    
+                }
+                else {
+                    return [...prevSeatsName, name];
+                }
+
             })
         }
     }
@@ -72,7 +83,7 @@ export default function SeatsPage() {
                         key={sea.id}
                         id={sea.id}
                         isAvailable={sea.isAvailable}
-                        onClick={() => clickSeat(sea.id, sea.isAvailable)}
+                        onClick={() => clickSeat(sea.id, sea.isAvailable, sea.name)}
                         selected={selectedSeat.includes(sea.id)}>
                         {sea.name}
 
@@ -101,7 +112,7 @@ export default function SeatsPage() {
                     Nome do Comprador:
                     <input type="text" 
                     value={nameId} 
-                    onChange={e => setName(e.target.value)} 
+                    onChange={e => setNameId(e.target.value)} 
                     placeholder="Digite seu nome..." />
 
                     CPF do Comprador:
