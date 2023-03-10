@@ -75,6 +75,7 @@ export default function SeatsPage({selectedSeat, setSelectedSeat, selectedSeatNa
             <SeatsContainer>
                 {seatsMovie.map((sea) => (
                     <SeatItem
+                        data-test="seat"
                         key={sea.id}
                         id={sea.id}
                         isAvailable={sea.isAvailable}
@@ -103,24 +104,27 @@ export default function SeatsPage({selectedSeat, setSelectedSeat, selectedSeatNa
             </CaptionContainer>
 
             <FormContainer>
-                <form onSubmit={addSeats}>
+                <form onSubmit={addSeats} data-test="book-seat-btn">
                     Nome do Comprador:
-                    <input type="text" 
+                    <input
+                    data-test="client-name" 
+                    type="text" 
                     value={nameId} 
                     onChange={e => setNameId(e.target.value)} 
                     placeholder="Digite seu nome..." />
 
                     CPF do Comprador:
-                    <input 
+                    <input
+                    data-test="client-cpf" 
                     value={cpf}
                     onChange={e => setCpf(e.target.value)}
                     placeholder="Digite seu CPF..." />
 
-                    <button>Reservar Assento(s)</button>
+                    <button >Reservar Assento(s)</button>
                 </form>
             </FormContainer>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer"> 
                 <div>
                     <img src={movieSession.movie.posterURL} alt="poster" />
                 </div>

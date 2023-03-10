@@ -19,26 +19,28 @@ export default function SuccessPage({selectedSeatName, nameId, cpf, movieSession
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
-            <TextContainer>
+            <TextContainer data-test="movie-info">
                 <strong><p>Filme e sessão</p></strong>
                 <p>{movieSession.movie.title}</p>
                 <p>{movieSession.day.date} - {movieSession.name}</p>
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="seats-info">
                 <strong><p>Ingressos</p></strong>
                 
                 {seatsList}
 
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="client-info">
                 <strong><p>Comprador</p></strong>
                 <p>Nome: {nameId}</p>
                 <p>CPF: {cpf}</p>
             </TextContainer>
 
-            <button onClick={backHome}>Voltar para Home</button>
+            <button 
+            data-test="go-home-btn"
+            onClick={backHome}>Voltar para Home</button>
         </PageContainer>
     )
 }
