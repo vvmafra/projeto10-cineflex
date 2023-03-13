@@ -48,7 +48,7 @@ export default function SeatsPage({selectedSeat, setSelectedSeat, selectedSeatNa
     function addSeats(e) {
         e.preventDefault()
         const urlPost = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many"
-        const body = { ids: selectedSeat, name: nameId, cpf }
+        const body = { ids: selectedSeat, name: nameId, cpf: cpf }
     
         const promise = axios.post(urlPost, body)
         promise.then(res => navigate("/sucesso"))
