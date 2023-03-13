@@ -9,6 +9,12 @@ export default function SeatsPage({selectedSeat, setSelectedSeat, selectedSeatNa
     const { idSessao } = useParams()
     const navigate = useNavigate()
 
+
+    console.log(selectedSeat, "id do assento")
+    console.log(nameId, "nome do doido")
+    console.log(cpf, "cpf do brother")
+
+
     function clickSeat(seat, available, name) {
 
         if (!available) {
@@ -214,8 +220,8 @@ const CaptionItem = styled.div`
     font-size: 12px;
 `
 const SeatItem = styled.div`
-    border: ${props => props.selected ? "1px solid #0E7D71" : props.isAvailable ? "1px solid #808F9D" : "1px solid #F7C52B"};
-    background-color: ${props => props.selected ? "#1AAE9E" : props.isAvailable ? "#C3CFD9" : "#FBE192"};
+    border: ${props => (props.isAvailable === false) ? "1px solid #F7C52B" : props.selected ? "1px solid #0E7D71" : "1px solid #808F9D"};
+    background-color: ${props => (props.isAvailable === false) ? "#FBE192" : props.selected ? "#1AAE9E" :  "#C3CFD9"};
     height: 25px;
     width: 25px;
     border-radius: 25px;
